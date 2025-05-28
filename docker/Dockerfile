@@ -22,6 +22,8 @@ RUN mkdir -p /work
 
 # Install dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    apt-transport-https \
+    apt-utils \
     ca-certificates \
     curl \
     git \
@@ -29,13 +31,22 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     openssl \
     unzip \
     gpg \
+    gnupg \
+    lsb-release \
     wget \
     jq \
     yq && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* && \
+    mkdir -p /etc/apt/keyrings
 
 # Install Azure CLI
-RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
+RUN AZ_CLI_VERSION="2.73.0" && \
+    curl -sSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /etc/apt/keyrings/microsoft.gpg && \
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/azure-cli/ $(lsb_release -cs) main" \
+      > /etc/apt/sources.list.d/azure-cli.list && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends azure-cli=${AZ_CLI_VERSION}-1~$(lsb_release -cs) && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install Terraform
 RUN TERRAFORM_VERSION="1.11.4" && \
