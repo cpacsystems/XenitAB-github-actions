@@ -11,7 +11,7 @@ RUN GOOS=linux GOARCH=${TARGETARCH} GO111MODULE=on go build -o tf-prepare main.g
 # ------------------------------
 
 # Image used for the build stage
-FROM debian:stable-slim
+FROM debian:bookworm-slim
 
 # Set build arguments for target architecture
 ARG TARGETARCH
@@ -40,7 +40,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     mkdir -p /etc/apt/keyrings
 
 # Install Azure CLI
-RUN AZ_CLI_VERSION="2.73.0" && \
+RUN AZ_CLI_VERSION="2.80.0" && \
     curl -sSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /etc/apt/keyrings/microsoft.gpg && \
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/azure-cli/ $(lsb_release -cs) main" \
       > /etc/apt/sources.list.d/azure-cli.list && \
