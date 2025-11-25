@@ -49,7 +49,7 @@ RUN AZ_CLI_VERSION="2.80.0" && \
     rm -rf /var/lib/apt/lists/*
 
 # Install Terraform
-RUN TERRAFORM_VERSION="1.11.4" && \
+RUN TERRAFORM_VERSION="1.14.0" && \
     curl -L -o terraform.zip "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_${TARGETARCH}.zip" && \
     unzip terraform.zip -d /usr/local/bin && \
     rm terraform.zip
@@ -75,7 +75,7 @@ RUN AWS_RULESET_VERSION="v0.38.0" && \
     rm tflint-ruleset-aws.zip
 
 # Install terraform (tfenv)
-RUN TFENV_VERSION="1.11.0" && \
+RUN TFENV_VERSION="1.14.0" && \
     git clone https://github.com/tfutils/tfenv.git ~/.tfenv && \
     echo 'export PATH="$HOME/.tfenv/bin:$PATH"' >> ~/.bashrc && \
     ~/.tfenv/bin/tfenv install ${TFENV_VERSION} && \
