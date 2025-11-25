@@ -55,7 +55,7 @@ RUN TERRAFORM_VERSION="1.14.0" && \
     rm terraform.zip
 
 # Install tflint
-RUN TFLINT_VERSION="v0.55.1" && \
+RUN TFLINT_VERSION="v0.60.0" && \
     curl -L -o tflint.zip "https://github.com/terraform-linters/tflint/releases/download/${TFLINT_VERSION}/tflint_linux_${TARGETARCH}.zip" && \
     unzip tflint.zip -d /usr/local/bin && \
     rm tflint.zip && \
@@ -64,12 +64,12 @@ RUN TFLINT_VERSION="v0.55.1" && \
 # Install tflint rulesets && copy tflint configuration
 COPY config/.tflint.hcl /work/.tflint.d/.tflint.hcl
 
-RUN AZURERM_RULESET_VERSION="v0.28.0" && \
+RUN AZURERM_RULESET_VERSION="v0.30.0" && \
     curl -L -o tflint-ruleset-azurerm.zip "https://github.com/terraform-linters/tflint-ruleset-azurerm/releases/download/${AZURERM_RULESET_VERSION}/tflint-ruleset-azurerm_linux_${TARGETARCH}.zip" && \
     unzip tflint-ruleset-azurerm.zip -d /work/.tflint.d/plugins/ && \
     rm tflint-ruleset-azurerm.zip
 
-RUN AWS_RULESET_VERSION="v0.38.0" && \
+RUN AWS_RULESET_VERSION="v0.44.0" && \
     curl -L -o tflint-ruleset-aws.zip "https://github.com/terraform-linters/tflint-ruleset-aws/releases/download/${AWS_RULESET_VERSION}/tflint-ruleset-aws_linux_${TARGETARCH}.zip" && \
     unzip tflint-ruleset-aws.zip -d /work/.tflint.d/plugins/ && \
     rm tflint-ruleset-aws.zip
